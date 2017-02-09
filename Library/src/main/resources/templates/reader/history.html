@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Library</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+	<nav class="navbar">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/">Library</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a href="/"
+					role="button" data-toggle="modal">My Books</a></li>
+				
+				<li><a href="/reader/history"
+					role="button" data-toggle="modal">View history</a></li>
+				
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="/j_spring_security_logout"><span
+						class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div id="showInfo"></div>
+	<div class="container">
+		<h2>History</h2>
+		<table class="table table-hover">
+			<tr>
+				<th>ID</th>
+				<th>BOOK NAME</th>
+				<th>READER</th>
+				<th>START DATE</th>
+				<th>END DATE</th>
+			</tr>
+			<tr th:each="temporaryPossession,iterationStatus  : ${temporaryPossessions}">
+				<td th:text="${temporaryPossession.id}">001</td>
+				<td th:text="${temporaryPossession.book.name}">Name</td>
+				<td>
+					
+						<div th:text="${temporaryPossession.reader.firstName + ' ' + temporaryPossession.reader.lastName + ' '}"></div>
+				
+				</td>
+				<td th:text="${temporaryPossession.startDate}"></td>
+				<td th:text="${temporaryPossession.endDate}"></td>
+			</tr>
+		</table>
+	</div>
+
+	
+</body>
+</html>

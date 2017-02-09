@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Library</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	$('#myModal').on('shown.bs.modal', function() {
+
+	})
+</script>
+
+
+</head>
+
+<body>
+
+	<nav class="navbar">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/">Library</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a href="/" onclick="showBooksInLibrary()" role="button"
+					data-toggle="modal">Books in Library</a></li>
+				<li><a href="/librarian/booksIssuedOnHands" role="button"
+					data-toggle="modal">Books issued on hands</a></li>
+				<li><a href="/librarian/history" onclick="showHistory()"
+					role="button" data-toggle="modal">View history</a></li>
+				<li><a id="myInput" role="button" data-toggle="modal"
+					data-target="#myModal">TAKE A BOOK</a></li>
+
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="/j_spring_security_logout"><span
+						class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div id="showInfo"></div>
+	<div class="container">
+		<h2>Books Issued On Hands</h2>
+		<table class="table table-hover">
+			<tr>
+				<th>SNO</th>
+				<th>ID</th>
+				<th>NAME</th>
+				<th>AUTHORS</th>
+			</tr>
+			<tr th:each="book,iterationStatus  : ${books}">
+				<td th:text="${iterationStatus.count}">1</td>
+				<td th:text="${book.id}">001</td>
+				<td th:text="${book.name}">Name</td>
+				<td>
+					<div th:each="author,iterationStatus  : ${book.authors}">
+						<div th:text="${author.firstName + ' ' + author.lastName + ' '}"></div>
+					</div>
+				</td>
+
+			</tr>
+		</table>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<form class="form-horizontal" action="/librarian/takeABook"
+			method="post">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">Book Info</h4>
+
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label class="col-lg-3 control-label">Book Id: </label>
+							<div class="col-lg-8">
+								<input type="number" id="bookId" name="bookId" />
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Take a Book</button>
+					</div>
+				</div>
+			</div>
+			</form>
+	</div>
+</body>
+</html>
